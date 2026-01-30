@@ -7900,7 +7900,7 @@ if(typeof(scriptUrls)=="undefined")
 	console.log('FOSSIL is now running as main.')
 
 	//=============================================================================
-	// main.js v1.2.1
+	// main.js v1.10.0
 	//=============================================================================
 
 //this is an absurd thing we do to keep these constants in a global scope.
@@ -7936,6 +7936,7 @@ if(typeof(scriptUrls)=="undefined")
 		run() {
 			this.showLoadingSpinner();
 			this.testXhr();
+			this.hookNwjsClose();
 			this.loadMainScripts();
 		}
 
@@ -7962,6 +7963,14 @@ if(typeof(scriptUrls)=="undefined")
 			xhr.send();
 		}
 
+		hookNwjsClose() {
+			// [Note] When closing the window, the NW.js process sometimes does
+			//   not terminate properly. This code is a workaround for that.
+			if (typeof nw === "object") {
+				nw.Window.get().on("close", () => nw.App.quit());
+			}
+		}
+		
 		loadMainScripts() {
 			for (const url of scriptUrls) {
 				const script = document.createElement("script");
@@ -8172,3 +8181,4 @@ Fossil.versionSpoofPlugins=[
 'YEP_Z_PassiveCases',
 'YEP_Z_SkillRewards',
 'YEP_Z_StateProtection']
+

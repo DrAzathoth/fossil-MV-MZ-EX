@@ -2297,12 +2297,32 @@ fossilStaticFixes = function(){
 	Window_Base.prototype.textPadding = function() {
 		return 6;
 	};
-	Window_Base._iconWidth = ImageManager.iconWidth;
-	Window_Base._iconHeight = ImageManager.iconHeight;
-	Window_Base._faceWidth = ImageManager.faceWidth
-	Window_Base._faceHeight = ImageManager.faceHeight
-	Sprite_StateIcon._iconWidth = ImageManager.iconWidth;
-	Sprite_StateIcon._iconHeight = ImageManager.iconHeight;
+	
+	// Delay access to ImageManager dimensions until after database is loaded
+	Object.defineProperty(Window_Base, '_iconWidth', {
+		get: function() { return ImageManager.iconWidth; },
+		configurable: true
+	});
+	Object.defineProperty(Window_Base, '_iconHeight', {
+		get: function() { return ImageManager.iconHeight; },
+		configurable: true
+	});
+	Object.defineProperty(Window_Base, '_faceWidth', {
+		get: function() { return ImageManager.faceWidth; },
+		configurable: true
+	});
+	Object.defineProperty(Window_Base, '_faceHeight', {
+		get: function() { return ImageManager.faceHeight; },
+		configurable: true
+	});
+	Object.defineProperty(Sprite_StateIcon, '_iconWidth', {
+		get: function() { return ImageManager.iconWidth; },
+		configurable: true
+	});
+	Object.defineProperty(Sprite_StateIcon, '_iconHeight', {
+		get: function() { return ImageManager.iconHeight; },
+		configurable: true
+	});
 
 	Window_Base.prototype.standardPadding = function() {
 		return 18;
